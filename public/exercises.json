@@ -1,0 +1,97 @@
+[
+	{
+		"name": "Clean",
+		"attributes": [
+			{
+				"name": "reps",
+				"type": "numeric"
+			},
+			{
+				"name": "weight",
+				"type": "numeric"
+			}
+		]
+	},
+	{
+		"name": "Jerk",
+		"attributes": [
+			{
+				"name": "reps",
+				"type": "numeric"
+			},
+			{
+				"name": "weight",
+				"type": "numeric"
+			}
+		]
+	},
+	{
+		"name": "Clean & Jerk",
+		"consistsOf": ["Clean", "Jerk"],
+		"attributes": [
+			{
+				"name": "reps",
+				"type": "numeric"
+			},
+			{
+				"name": "weight",
+				"type": "numeric"
+			}
+		]
+	},
+	{
+		"name": "Bear Complex",
+		"consistsOf": ["Power Clean", "Front Squat", "Push Press", "Back Squat", "Push Press"],
+		"attributes": [
+			{
+				"name": "reps",
+				"type": "numeric"
+			},
+			{
+				"name": "weight",
+				"type": "numeric"
+			}
+		]
+	},
+	{
+		"name": "Snatch Complex 1",
+		"consistsOf": ["Snatch Pull", "Snatch"],
+		"attributes": [
+			{
+				"name": "reps",
+				"type": "numeric"
+			},
+			{
+				"name": "weight",
+				"type": "numeric"
+			}
+		]
+	},
+	{
+		"name": "Clean & Jerk Complex 1",
+		"consistsOf": ["Clean Pull", "Clean", "Front Squat", "Jerk"],
+		"attributes": [
+			{
+				"name": "reps",
+				"type": "numeric"
+			},
+			{
+				"name": "weight",
+				"type": "numeric"
+			}
+		]
+	},
+	{
+		"name": "Run",
+		"attributes": [
+			{
+				"name": "distance",
+				"type": "numeric"
+			},
+			{
+				"name": "time",
+				"type": "numeric"
+			}
+		]
+	}
+]

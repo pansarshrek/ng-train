@@ -1,0 +1,26 @@
+<div class="input-group">
+	<input ng-model="search" ng-init="search = ''" type="text" placeholder="Search" class="form-control" />
+	<span class="input-group-btn">
+		<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+	</span>
+</div>
+<table class="table table-bordered">
+	<tr>
+		<th>Name</th>
+		<th>Consists Of</th>
+		<th>Attributes</th>
+		<th>Remove</th>
+	</tr>
+	<tr ng-repeat="exercise in exercises | filter:{name:search}">
+		<td>{{exercise.name}}</td>
+		<td>{{exercise.consistsOf.join(' + ')}}</td>
+		<td>
+			<ol>
+				<li ng-repeat="attr in exercise.attributes">{{attr.name}} : {{attr.type}}</li>
+			</ol>
+		</td>
+		<td>
+			<button class="btn btn-danger" ng-click="delete(exercise, $index)">&times;</button>
+		</td>
+	</tr>
+</table>

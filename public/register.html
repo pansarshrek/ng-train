@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/login.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="#">ng-train</a>
+				</div>
+			</div>
+		</div>
+		<div id="view" class="container">
+			<form id="form" method="post" action="/register">
+				<legend>Register</legend>
+				<label for="username">Username</label>
+				<input type="text" placeholder="Username" name="username" class="input-block-level" />
+				<label for="password">Password</label>
+				<input type="password" placeholder="Password" name="password" class="input-block-level" />
+				<label for="repassword">Retype Password</label>
+				<input type="password" placeholder="Password" name="repassword" class="input-block-level" />
+				<label for="email">Email</label>
+				<input type="email" placeholder="Email" name="email" class="input-block-level" />
+				<button class="btn btn-primary btn-block">Register</button>
+			</form>
+		</div>
+	</body>
+</html>

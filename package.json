@@ -1,0 +1,13 @@
+{
+  "name": "ng-train",
+  "version": "0.0.0",
+  "description": "AngularJS application for training",
+  "dependencies": {
+    "express": "latest",
+    "mongoose": "latest",
+    "passport": "latest",
+    "passport-local": "latest"
+  },
+  "author": "Nicklas Erman",
+  "license": "BSD"
+}

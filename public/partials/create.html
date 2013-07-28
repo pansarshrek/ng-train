@@ -1,0 +1,51 @@
+
+<div class="row">
+	<div class="col-lg-4">
+		<form class="form-horizontal">
+				<label>Name of Exercise</label>
+				<input ng-model="exercise.name" type="text" placeholder="Name" class="form-control" />
+			
+			
+				<label>Consists of</label>
+				<input type="text" ng-list ng-model="exercise.consistsOf" class="form-control" />
+			
+			
+				<label>Attributes</label>
+				
+				<ol class="unstyled" id="attributes-list">
+					<li ng-repeat="attr in exercise.attributes">
+						<input type="text" placeholder="Name" ng-model="attr.name" class="form-control" />
+						<button ng-click="moveAttributeUp($index)" ng-disabled="$index == 0" class="btn"><i class="glyphicon glyphicon-arrow-up"></i></button>
+						<select ng-model="attr.type" class="form-control">
+							<option value="int">Integer</option>
+							<option value="double">Double</option>
+							<option value="text">Text</option>
+							<option value="bool">Bool</option>
+						</select>
+						<button ng-click="removeAttribute($index)" class="btn btn-danger"><i class="glyphicon glyphicon-remove-circle"></i></button>
+					</li>
+				</ol>
+				<button ng-click="addAttribute()" class="btn">Add Attribute</button>
+			
+		</form>
+	</div>
+	<div class="col-lg-8">
+		<table class="table table-bordered">
+			<tr>
+				<th>Name</th>
+				<th>Consists Of</th>
+				<th>Attributes</th>
+			</tr>
+			<tr>
+				<td>{{exercise.name}}</td>
+				<td>{{exercise.consistsOf.join(' + ')}}</td>
+				<td>
+					<ol>
+						<li ng-repeat="attr in exercise.attributes">{{attr.name}} : {{attr.type}}</li>
+					</ol>
+				</td>
+			</tr>
+		</table>
+		<button class="btn btn-primary" ng-click="createExercise()">Create Exercise</button>
+	</div>
+</div>
