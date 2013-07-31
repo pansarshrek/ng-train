@@ -1,56 +1,40 @@
 var express = require('express'),
 	http = require('http'),
 	path = require('path'),
-	mongoose = require('mongoose'),
-	crypto = require('crypto');
+	mongoose = require('mongoose');
+	
+
+var mongoModels = require('./models')(mongoose);
+
+var User = mongoModels.User;
+var Exercise = mongoModels.Exercise;
+var Workout = mongoModels.Workout;
+var ExerciseEntry = mongoModels.ExerciseEntry;
 
 mongoose.connect('mongodb://localhost/ng-train');
 
-var Schema = mongoose.Schema;
+// var Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
-	username: String,
-	password: String,
-	salt: String,
-	email: String
-});
 
-UserSchema.methods.validPassword = function(password) {
-	var sha256hash = crypto.createHash('sha256').update(this.salt + password).digest('hex');
-	if (sha256hash === this.password) return true;
-	else return false;
-}
 
-UserSchema.methods.setPassword = function(password, done) {
-	var self = this;
-	console.log("Setting password!");
-	crypto.randomBytes(48, function(ex, buf) { 
-		self.salt = buf.toString('hex');
-		self.password = crypto.createHash('sha256').update(self.salt + password).digest('hex');
-		done();
-	});
-}
+// var Attribute = new Schema({
+// 	name: String,
+// 	type: {
+// 		type: String,
+// 		enum: ['int', 'double', 'text', 'bool']
+// 	}
+// });
 
-var User = mongoose.model('User', UserSchema);
+// var ExerciseSchema = new Schema({
+// 	name: String,
+// 	attributes: [Attribute]
+// });
 
-var Attribute = new Schema({
-	name: String,
-	type: {
-		type: String,
-		enum: ['int', 'double', 'text', 'bool']
-	}
-});
+// ExerciseSchema.methods.addAttribute = function(attribute) {
+// 	this.attributes.push(attribute);
+// }
 
-var ExerciseSchema = new Schema({
-	name: String,
-	attributes: [Attribute]
-});
-
-ExerciseSchema.methods.addAttribute = function(attribute) {
-	this.attributes.push(attribute);
-}
-
-var Exercise = mongoose.model('Exercise', ExerciseSchema);
+// var Exercise = mongoose.model('Exercise', ExerciseSchema);
 
 function checkAuth(req, res, next) {
 	if (!req.session.user_id) {
@@ -104,6 +88,24 @@ app.post('/register', function(req, res) {
 	}
 });
 
+app.get('/api/workouts', checkAuth, function(req, res) {
+	Workout.find(function(err, workouts) {
+		res.send(workouts);
+	});
+});
+
+app.post('/api/workouts', checkAuth, function(req, res) {
+	var workout = new Workout(req.body);
+	console.log(req.body);
+	workout.save(function(err, workout) {
+		if (!err) {
+			res.send(workout);
+		} else {
+			res.send(err);
+		}
+	});
+});
+
 app.get('/api/exercises', checkAuth, function(req, res) {
 	Exercise.find(function(err, exercises) {
 		res.send(exercises);
@@ -153,7 +155,7 @@ app.put('/api/exercises/:id', checkAuth, function(req, res) {
 				}
 			});
 		}
-	})
+	});
 });
 
 app.delete('/api/exercises/:id', checkAuth, function(req, res) {
@@ -169,9 +171,11 @@ app.delete('/api/exercises/:id', checkAuth, function(req, res) {
 				}
 			});
 		}
-	})
+	});
 
 });
+
+
 
 app.get('/api/users', checkAuth, function(req, res) {
 	User.find().select('username').exec(function(err, users) {
@@ -190,11 +194,3 @@ app.get('/api/authenticated', function(req, res) {
 http.createServer(app).listen(8000, function() {
 	console.log("Webserver started on port 8000!");
 });
-
-// crypto.randomBytes(32, function(ex, buf) {
-// 	var password = "loltroll!"; 
-// 	var salt = buf.toString('hex');
-// 	var password = crypto.createHash('sha256').update(salt + password).digest('hex');
-// 	console.log("salt : \n" + salt);
-// 	console.log("hashed password : \n" + password);
-// });

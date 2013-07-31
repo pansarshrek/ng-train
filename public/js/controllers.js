@@ -2,7 +2,6 @@ function CreateExercise($scope, $routeParams, $http) {
 
 	$scope.exercise = {
 		name: '',
-		consistsOf: [],
 		attributes: []
 	};
 
@@ -28,7 +27,6 @@ function CreateExercise($scope, $routeParams, $http) {
 			console.dir(data);
 			$scope.exercise = {
 				name: '',
-				consistsOf: [],
 				attributes: []
 			};
 		});
@@ -84,6 +82,15 @@ function NewWorkout($scope, Exercises) {
 	$scope.input = {
 		name: '',
 		sets: []
+	};
+
+	$scope.test = {name: "hej"};
+
+
+	$scope.exercise = {};
+
+	$scope.select = function(exercise) {
+		$scope.exercise = exercise;		
 	}
 
 	$scope.add = function() {
