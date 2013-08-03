@@ -3,7 +3,6 @@ var express = require('express'),
 	path = require('path'),
 	mongoose = require('mongoose');
 	
-
 var mongoModels = require('./models')(mongoose);
 
 var User = mongoModels.User;
@@ -12,29 +11,6 @@ var Workout = mongoModels.Workout;
 var ExerciseEntry = mongoModels.ExerciseEntry;
 
 mongoose.connect('mongodb://localhost/ng-train');
-
-// var Schema = mongoose.Schema;
-
-
-
-// var Attribute = new Schema({
-// 	name: String,
-// 	type: {
-// 		type: String,
-// 		enum: ['int', 'double', 'text', 'bool']
-// 	}
-// });
-
-// var ExerciseSchema = new Schema({
-// 	name: String,
-// 	attributes: [Attribute]
-// });
-
-// ExerciseSchema.methods.addAttribute = function(attribute) {
-// 	this.attributes.push(attribute);
-// }
-
-// var Exercise = mongoose.model('Exercise', ExerciseSchema);
 
 function checkAuth(req, res, next) {
 	if (!req.session.user_id) {
@@ -107,7 +83,7 @@ app.post('/api/workouts', checkAuth, function(req, res) {
 });
 
 app.get('/api/exercises', checkAuth, function(req, res) {
-	Exercise.find(function(err, exercises) {
+	Exercise.find().sort('name').exec(function(err, exercises) {
 		res.send(exercises);
 	});
 });

@@ -68,14 +68,21 @@ function Controller($scope, $http) {
 }
 
 function NewWorkout($scope, Exercises) {
+	function make2Digit(number) {
+		if (number < 10 && number >= 0) {
+			number = '0' + number;
+		}
+		return number;
+	}
+
 	function dateString(date) {
 		var year = date.getFullYear();
-		var month = (date.getMonth() + 1) < 10 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1);
-		var date = date.getDate();
+		var month = make2Digit(date.getMonth() + 1);
+		var date = make2Digit(date.getDate());
 		return year + '-' + month + '-' + date;
 	}
 
-	$scope.Exercises = Exercises;	
+	$scope.exercises = Exercises.query();
 
 	$scope.date = dateString(new Date());
 
@@ -83,15 +90,6 @@ function NewWorkout($scope, Exercises) {
 		name: '',
 		sets: []
 	};
-
-	$scope.test = {name: "hej"};
-
-
-	$scope.exercise = {};
-
-	$scope.select = function(exercise) {
-		$scope.exercise = exercise;		
-	}
 
 	$scope.add = function() {
 		var data = $scope.input.sets;
@@ -107,23 +105,40 @@ function NewWorkout($scope, Exercises) {
 			sets: []
 		}
 		
-	}
+	};
 
-	$scope.workoutData = [
-		{
-			name: 'Power Clean & Jerk',
-			sets: [
-				{reps: 2, weight: 70},
-				{reps: 2, weight: 70},
-				{reps: 2, weight: 80},
-				{reps: 2, weight: 90},
-				{reps: 2, weight: 95},
-				{reps: 1, weight: 100},
-				{reps: 1, weight: 100},
-				{reps: 3, weight: 90},
-				{reps: 3, weight: 90}
-			]
+	$scope.addEntry = function() {
+		if ($scope.exercise) {
+			if (!$scope.exercise.exerciseEntries) {
+				$scope.exercise.exerciseEntries = [];
+			}
+			var o = {};
+			$scope.exercise.attributes.forEach(function(el) {
+				if (el.type == 'bool')
+					o[el.name] = false;
+				else 
+					o[el.name] = '';
+			});
+			$scope.exercise.exerciseEntries.push(o);
 		}
-	];
+	};
+
+	$scope.saveExercise = function() {
+		var ex = $scope.exercise;
+		var obj = {
+			name: ex.name,
+			attributes: angular.copy(ex.attributes),
+			exerciseEntries: angular.copy(ex.exerciseEntries)
+		};
+
+		$scope.workoutData.push(obj);
+		console.dir($scope.workoutData);
+	};
+
+	$scope.setCurrentExercise = function(exercise) {
+		$scope.exercise = exercise;
+	};
+
+	$scope.workoutData = [];
 
 }
