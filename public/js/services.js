@@ -7,6 +7,12 @@
 		});
 	});
 
+	module.factory('Workouts', function($resource) {
+		return $resource('/api/workouts/:id', {
+			id: '@_id.$oid'
+		});
+	});
+
 	module.service('REST', function($http, $resource) {
 		
 		this.base = function(url) {

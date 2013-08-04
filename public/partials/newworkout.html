@@ -36,7 +36,7 @@
 						<label>{{attr.name}}</label>
 					</th>
 				</tr>
-				<tr ng-repeat="entry in exercise.exerciseEntries">
+				<tr ng-repeat="entry in exercise.entries">
 					<td>#{{$index + 1}}</td>
 					<td ng-switch on="attr.type" ng-repeat="attr in exercise.attributes">
 						<input ng-switch-when="bool" type="checkbox" ng-model="entry[attr.name]" />
@@ -63,11 +63,11 @@
 				<th>Name</th>
 				<th>Data</th>
 			</tr>
-			<tr ng-repeat="x in workoutData">
+			<tr ng-repeat="x in workout.data">
 				<td>{{x.name}}</td>
 				<td>
 					<ol class="set-list">
-						<li ng-repeat="entry in x.exerciseEntries">
+						<li ng-repeat="entry in x.entries">
 							<span ng-repeat="attr in x.attributes">
 								{{attr.name}}: {{entry[attr.name]}} 
 							</span>
@@ -77,5 +77,8 @@
 			</tr>
 		</table>
 	</div>
+</div>
+<div class="row">
+	<button class="btn btn-primary btn-block" ng-click="saveToBackend()">Save To Backend</button>
 </div>
 

@@ -67,7 +67,7 @@ function Controller($scope, $http) {
 
 }
 
-function NewWorkout($scope, Exercises) {
+function NewWorkout($scope, Exercises, Workouts) {
 	function make2Digit(number) {
 		if (number < 10 && number >= 0) {
 			number = '0' + number;
@@ -86,31 +86,16 @@ function NewWorkout($scope, Exercises) {
 
 	$scope.date = dateString(new Date());
 
-	$scope.input = {
-		name: '',
-		sets: []
-	};
-
-	$scope.add = function() {
-		var data = $scope.input.sets;
-		var sets = [];
-		for (var i = 0; i < data.length; i++) {
-			var repsWeight = data[i].split('x');
-			sets.push({reps: repsWeight[0], weight: repsWeight[1]})
-		}
-
-		$scope.workoutData.push({name: $scope.input.name, sets: sets});
-		$scope.input = {
-			name: '',
-			sets: []
-		}
-		
+	$scope.workout = {
+		date: new Date(),
+		timeElapsed: 60,
+		data: []
 	};
 
 	$scope.addEntry = function() {
 		if ($scope.exercise) {
-			if (!$scope.exercise.exerciseEntries) {
-				$scope.exercise.exerciseEntries = [];
+			if (!$scope.exercise.entries) {
+				$scope.exercise.entries = [];
 			}
 			var o = {};
 			$scope.exercise.attributes.forEach(function(el) {
@@ -119,7 +104,7 @@ function NewWorkout($scope, Exercises) {
 				else 
 					o[el.name] = '';
 			});
-			$scope.exercise.exerciseEntries.push(o);
+			$scope.exercise.entries.push(o);
 		}
 	};
 
@@ -128,17 +113,26 @@ function NewWorkout($scope, Exercises) {
 		var obj = {
 			name: ex.name,
 			attributes: angular.copy(ex.attributes),
-			exerciseEntries: angular.copy(ex.exerciseEntries)
+			entries: angular.copy(ex.entries)
 		};
 
-		$scope.workoutData.push(obj);
-		console.dir($scope.workoutData);
+		ex.entries = [];
+
+		$scope.workout.data.push(obj);
+		console.dir($scope.workout);
 	};
 
 	$scope.setCurrentExercise = function(exercise) {
 		$scope.exercise = exercise;
 	};
 
-	$scope.workoutData = [];
+	$scope.saveToBackend = function() {
+		console.log("Saving to backend!");
+		var w = new Workouts($scope.workout);
+		Workouts.save(w, function(res) {
+			console.dir(res);
+		});
+	};
+	
 
 }

@@ -45,13 +45,13 @@ module.exports = function(mongoose) {
 		exerciseId: { type: Schema.Types.ObjectId, ref: 'Exercise' },
 		workoutId: { type: Schema.Types.ObjectId, ref: 'Workout' },
 		attributes: [exports.AttributeSchema],
-		data: [Schema.Types.Mixed]
+		entries: [Schema.Types.Mixed]
 	});
 
 	exports.WorkoutSchema = new Schema({
 		date: Date,
 		timeElapsed: Number,
-		data: [{type: Schema.Types.ObjectId, ref: 'ExerciseEntry'}]
+		entries: [{type: Schema.Types.ObjectId, ref: 'ExerciseEntry'}]
 	});
 
 	exports.User = mongoose.model('User', exports.UserSchema);

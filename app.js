@@ -64,21 +64,47 @@ app.post('/register', function(req, res) {
 	}
 });
 
+app.get('/api/exerciseentries', checkAuth, function(req, res) {
+	ExerciseEntry.find(function(err, entries) {
+		res.send(entries);
+	});
+});
+
+app.get('/api/exerciseentries/:id', checkAuth, function(req, res) {
+	ExerciseEntry.findById(req.params.id, function(err, entry) {
+		res.send(entry);
+	});
+});
+
 app.get('/api/workouts', checkAuth, function(req, res) {
-	Workout.find(function(err, workouts) {
+	Workout.find()
+	.populate('entries')
+	.exec(function(err, workouts) {
 		res.send(workouts);
 	});
 });
 
-app.post('/api/workouts', checkAuth, function(req, res) {
+app.post('/api/workouts', checkAuth, function(req, res) {	
+	var data = req.body.data;
+	var exerciseEntries = [];
+
+	data.forEach(function(el, i) {
+		var entry = new ExerciseEntry(el);
+		entry.save(function(err, entry) {
+			if (err) console.log(err);
+		});
+		exerciseEntries.push(entry._id);
+	});
+	console.log(exerciseEntries);
 	var workout = new Workout(req.body);
-	console.log(req.body);
+	console.log(workout);
+	workout.entries = exerciseEntries;
+	console.log(workout);
 	workout.save(function(err, workout) {
-		if (!err) {
-			res.send(workout);
-		} else {
+		if (err) 
 			res.send(err);
-		}
+		else 
+			res.send(workout);
 	});
 });
 
