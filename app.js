@@ -3,7 +3,7 @@ var express = require('express'),
 	path = require('path'),
 	mongoose = require('mongoose');
 	
-var mongoModels = require('./models')(mongoose);
+var mongoModels = require('./backendjs/models')(mongoose);
 
 var User = mongoModels.User;
 var Exercise = mongoModels.Exercise;
