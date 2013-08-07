@@ -26,7 +26,7 @@ angular.module('ng-train', ['exercisesService', 'directives']).
 	config(['$routeProvider', function($routeProvider) {
 		$routeProvider.
 			when('/dashboard', {templateUrl: 'partials/dashboard.html', controller: Dashboard}).
-			when('/create', {templateUrl: 'partials/create.html', controller: CreateExercise}).
+			when('/createexercise', {templateUrl: 'partials/createexercise.html', controller: CreateExercise}).
 			when('/exercises', {templateUrl: 'partials/exercises.html', controller: ExercisesController}).
 			when('/newworkout', {templateUrl: 'partials/newworkout.html', controller: NewWorkout}).
 			when('/workouts', {templateUrl: 'partials/workouts.html', controller: Workouts}).

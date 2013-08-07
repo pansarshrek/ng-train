@@ -6,10 +6,6 @@
 				<input ng-model="exercise.name" type="text" placeholder="Name" class="form-control" />
 			
 			
-				<label>Consists of</label>
-				<input type="text" ng-list ng-model="exercise.consistsOf" class="form-control" />
-			
-			
 				<label>Attributes</label>
 				
 				<ol class="unstyled" id="attributes-list">
@@ -33,12 +29,10 @@
 		<table class="table table-bordered">
 			<tr>
 				<th>Name</th>
-				<th>Consists Of</th>
 				<th>Attributes</th>
 			</tr>
 			<tr>
 				<td>{{exercise.name}}</td>
-				<td>{{exercise.consistsOf.join(' + ')}}</td>
 				<td>
 					<ol>
 						<li ng-repeat="attr in exercise.attributes">{{attr.name}} : {{attr.type}}</li>
@@ -46,6 +40,7 @@
 				</td>
 			</tr>
 		</table>
-		<button class="btn btn-primary" ng-click="createExercise()">Create Exercise</button>
+		
 	</div>
+	<button class="btn btn-primary btn-block" ng-click="createExercise()">Create Exercise</button>
 </div>
