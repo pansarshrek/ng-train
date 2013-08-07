@@ -67,27 +67,41 @@ exports.createApi = function(app, models) {
 		});
 	});
 
-	app.post('/api/workouts', checkAuth, function(req, res) {	
+	app.get('/api/workouts/:id', checkAuth, function(req, res) {
+		Workout
+		.findById(req.params.id)
+		.populate('entries')
+		.exec(function(err, workout) {
+			if (err) 
+				res.send(err);
+			else
+				res.send(workout);
+		});
+	});
+
+	app.post('/api/workouts', checkAuth, function(req, res) {
 		var data = req.body.data;
 		var exerciseEntries = [];
 
+		var workout = new Workout(req.body);
+
 		data.forEach(function(el, i) {
 			var entry = new ExerciseEntry(el);
+			entry.workoutId = workout._id;
 			entry.save(function(err, entry) {
 				if (err) console.log(err);
 			});
 			exerciseEntries.push(entry._id);
 		});
-		console.log(exerciseEntries);
-		var workout = new Workout(req.body);
-		console.log(workout);
+
 		workout.entries = exerciseEntries;
-		console.log(workout);
+
 		workout.save(function(err, workout) {
-			if (err) 
+			if (err) {
 				res.send(err);
-			else 
+			} else {
 				res.send(workout);
+			}
 		});
 	});
 

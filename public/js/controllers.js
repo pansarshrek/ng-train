@@ -37,14 +37,7 @@ function CreateExercise($scope, $routeParams, $http) {
 function Dashboard($scope, $routeParams) {
 }
 
-function ExercisesController($scope, $routeParams, $http, Exercises, REST) {
-
-	// REST.doStuff();
-
-	var exercises = REST.base('/api/exercises');
-	exercises.get().success(function(exercises) {
-		console.dir(exercises);
-	})
+function ExercisesController($scope, $routeParams, $http, Exercises) {
 
 	$scope.delete = function(exercise) {
 		$scope.exercises.forEach(function(ex, index) {
@@ -55,16 +48,12 @@ function ExercisesController($scope, $routeParams, $http, Exercises, REST) {
 	}
 
 	$scope.exercises = Exercises.query();
-
 }
 
 function Controller($scope, $http) {
-
 	$http.get('/api/authenticated').success(function(data) {
 		$scope.authenticated = data.authenticated;
 	});
-	
-
 }
 
 function NewWorkout($scope, Exercises, Workouts) {
@@ -112,6 +101,7 @@ function NewWorkout($scope, Exercises, Workouts) {
 		var ex = $scope.exercise;
 		var obj = {
 			name: ex.name,
+			exerciseId: ex._id,
 			attributes: angular.copy(ex.attributes),
 			entries: angular.copy(ex.entries)
 		};
@@ -135,4 +125,8 @@ function NewWorkout($scope, Exercises, Workouts) {
 	};
 	
 
+}
+
+function Workouts($scope, Workouts) {
+	$scope.workouts = Workouts.query();
 }

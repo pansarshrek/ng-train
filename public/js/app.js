@@ -29,5 +29,6 @@ angular.module('ng-train', ['exercisesService', 'directives']).
 			when('/create', {templateUrl: 'partials/create.html', controller: CreateExercise}).
 			when('/exercises', {templateUrl: 'partials/exercises.html', controller: ExercisesController}).
 			when('/newworkout', {templateUrl: 'partials/newworkout.html', controller: NewWorkout}).
+			when('/workouts', {templateUrl: 'partials/workouts.html', controller: Workouts}).
 			otherwise({redirectTo: '/dashboard'});
 	}]);
