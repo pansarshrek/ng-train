@@ -1,5 +1,4 @@
 var express = require('express');
-var path = require('path');
 
 exports.createApi = function(app, models) {
 
